@@ -5,8 +5,9 @@ class JobsService {
     const jobs = await dbContext.Jobs.find(query)
     return jobs
   }
-  postJob(jobData) {
-
+  async postJob(jobData) {
+    const newJob = await dbContext.Jobs.create(jobData)
+    return newJob
   }
 
 }
