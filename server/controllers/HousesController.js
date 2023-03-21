@@ -8,8 +8,10 @@ export class HousesController extends BaseController {
       .get('', this.getHouses)
       .get('/:houseId', this.getHouseById)
       .post('', this.newHouse)
-      .delete('/houseId', this.deleteHouse)
+      .put('/:houseId', this.editHouse)
+      .delete('/:houseId', this.deleteHouse)
   }
+
 
 
 
@@ -42,7 +44,16 @@ export class HousesController extends BaseController {
       next(error)
     }
   }
-
+  async editHouse(req, res, next) {
+    try {
+      let houseId = req.params.houseId
+      let houseEdits = req.body
+      let editedHouse = await housesService.editHouse(houseId, houseEdits)
+      return res.send(editedHouse)
+    } catch (error) {
+      next(error)
+    }
+  }
   async deleteHouse(req, res, next) {
     try {
       const houseId = req.params.houseId
